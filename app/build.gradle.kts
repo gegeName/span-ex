@@ -36,6 +36,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":spanutil"))
+    implementation(project(":glidespan"))
+    implementation(project(":svgspan"))
+    implementation(project(":svgaspan"))
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
