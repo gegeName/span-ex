@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.chat.glidespan"
+    namespace = "com.chat.spanutil"
     compileSdk = 35
 
     defaultConfig {
@@ -26,8 +26,6 @@ kotlin {
 dependencies {
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("androidx.core:core-ktx:1.15.0")
-    api(project(":spanutil"))
-    implementation("com.github.bumptech.glide:glide:5.0.5")
 }
 
 apply(from = "jitpack.gradle")

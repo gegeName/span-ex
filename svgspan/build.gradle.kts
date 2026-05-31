@@ -26,7 +26,7 @@ kotlin {
 dependencies {
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("androidx.core:core-ktx:1.15.0")
-    api("com.github.gegeName:span-util:0.0.1")
+    api(project(":spanutil"))
     implementation("com.squareup.okhttp3:okhttp:5.3.2")
     implementation("com.caverock:androidsvg-aar:1.4") {
         exclude("org.jetbrains.kotlin", "kotlin-android-extensions-runtime")
