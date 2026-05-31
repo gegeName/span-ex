@@ -91,6 +91,7 @@ class RoundMaskDrawable(
         sourceBitmap = null
         sourceCanvas = null
         sourcePaint.shader = null
+        inner.callback = null
     }
 
     override fun setBounds(left: Int, top: Int, right: Int, bottom: Int) {

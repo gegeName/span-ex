@@ -1261,10 +1261,16 @@ class SpanBuilder private constructor(private val context: Context) {
         pendingImageLoads.forEach { load ->
             val loader = load.loader ?: requireLoader(LoaderType.Image) ?: return@forEach
             loader.load(context, load.url, load.width, load.height, load.circle) { resource ->
-                if (textView.getTag(tagKey) !== ssb) return@load
+                if (textView.getTag(tagKey) !== ssb) {
+                    releaseDiscardedDrawable(resource)
+                    return@load
+                }
                 val curStart = ssb.getSpanStart(load.placeholder)
                 val curEnd = ssb.getSpanEnd(load.placeholder)
-                if (curStart !in 0 until curEnd || curEnd > ssb.length) return@load
+                if (curStart !in 0 until curEnd || curEnd > ssb.length) {
+                    releaseDiscardedDrawable(resource)
+                    return@load
+                }
                 resource.setBounds(0, 0, load.width, load.height)
                 ssb.removeSpan(load.placeholder)
                 val borderConfig = pendingImageBorders.remove(load.placeholder)
@@ -1286,6 +1292,12 @@ class SpanBuilder private constructor(private val context: Context) {
                 onResolved()
             }
         }
+    }
+
+    private fun releaseDiscardedDrawable(drawable: Drawable) {
+        (drawable as? Releasable)?.release()
+        (drawable as? RoundMaskDrawable)?.release()
+        drawable.callback = null
     }
 
     /**
