@@ -10,6 +10,7 @@ jdk:
 install:
   - ./gradlew
     :glidespan:publishToMavenLocal
+    :spanutil:publishToMavenLocal
     :svgspan:publishToMavenLocal
     :svgaspan:publishToMavenLocal
     -PVERSION_NAME=$VERSION
