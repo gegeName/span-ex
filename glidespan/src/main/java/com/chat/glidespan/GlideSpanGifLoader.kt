@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.ColorFilter
 import android.graphics.PixelFormat
+import android.graphics.Rect
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
 import android.os.Handler
@@ -90,6 +91,7 @@ private class ForeverGifDrawable(
 ) : Drawable(), Animatable, Drawable.Callback, Releasable {
 
     private val mainHandler = Handler(Looper.getMainLooper())
+    private val lastBounds = Rect()
     private var running = false
     private var released = false
 
@@ -104,17 +106,6 @@ private class ForeverGifDrawable(
         }
     }
 
-    private val watchdog = object : Runnable {
-        override fun run() {
-            if (released || !running) return
-            if (!gif.isRunning) {
-                gif.start()
-                invalidateSelf()
-            }
-            mainHandler.postDelayed(this, WATCHDOG_INTERVAL_MS)
-        }
-    }
-
     init {
         gif.setLoopCount(GifDrawable.LOOP_FOREVER)
         gif.registerAnimationCallback(restartCallback)
@@ -122,7 +113,10 @@ private class ForeverGifDrawable(
     }
 
     override fun draw(canvas: Canvas) {
-        displayDrawable.bounds = bounds
+        if (lastBounds != bounds) {
+            lastBounds.set(bounds)
+            displayDrawable.bounds = lastBounds
+        }
         displayDrawable.draw(canvas)
     }
 
@@ -145,13 +139,10 @@ private class ForeverGifDrawable(
         if (released) return
         running = true
         gif.start()
-        mainHandler.removeCallbacks(watchdog)
-        mainHandler.postDelayed(watchdog, WATCHDOG_INTERVAL_MS)
     }
 
     override fun stop() {
         running = false
-        mainHandler.removeCallbacks(watchdog)
         gif.stop()
     }
 
@@ -186,9 +177,5 @@ private class ForeverGifDrawable(
 
     override fun unscheduleDrawable(who: Drawable, what: Runnable) {
         callback?.unscheduleDrawable(this, what)
-    }
-
-    private companion object {
-        const val WATCHDOG_INTERVAL_MS = 800L
     }
 }
