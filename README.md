@@ -151,7 +151,8 @@ SpanBuilder.with(this)
 
 | API | 说明 |
 | --- | --- |
-| `append(text)` / `appendLine(text)` | 追加文本 |
+| `append(text)` | 追加文本 |
+| `appendLine(text)` | 追加文本并换行；不传参数时只追加换行 |
 | `setText(text)` | 设置整段文本 |
 | `find()` / `findAll()` / `findRegex()` / `range()` / `all()` | 定位需要设置样式的片段 |
 | `color()` / `backgroundColor()` / `sizePx()` | 基础文字样式 |
