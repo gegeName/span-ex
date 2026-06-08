@@ -22,14 +22,17 @@ apply plugin: 'maven-publish'
 
 // ─── 坐标 ───────────────────────────────────────────────────────────────────
 ext {
-    publishGroupId    = 'com.github.gegeName'                    // TODO: GitHub 用户名
+    publishGroupId    = 'com.github.gegeName.span-ex'
     publishArtifactId = 'spanutil'
     publishVersion    = project.findProperty('VERSION_NAME') ?: '0.1.0-LOCAL'
 
-    publishUrl        = 'https://github.com/gegeName/span-ex'       // TODO
+    publishUrl        = 'https://github.com/gegeName/span-ex'
     publishDeveloperId   = 'gegeName'
     publishDeveloperName = 'span-ex'
 }
+
+group = publishGroupId
+version = publishVersion
 
 // ─── 让 AGP release variant 同时打 sources / javadoc jar ─────────────────────
 android {

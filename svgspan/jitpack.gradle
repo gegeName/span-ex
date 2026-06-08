@@ -1,7 +1,7 @@
 apply plugin: 'maven-publish'
 
 ext {
-    publishGroupId    = 'com.github.gegeName'
+    publishGroupId    = 'com.github.gegeName.span-ex'
     publishArtifactId = 'svgspan'
     publishVersion    = project.findProperty('VERSION_NAME') ?: '0.1.0-LOCAL'
 
@@ -9,6 +9,9 @@ ext {
     publishDeveloperId   = 'gegeName'
     publishDeveloperName = 'span-ex'
 }
+
+group = publishGroupId
+version = publishVersion
 
 android {
     publishing {
